@@ -1,0 +1,46 @@
+<%- include ('../../partials/header.ejs') %>
+<%- include ('../../partials/navbar.ejs') %>
+
+<div class="container">
+
+    <div class="card mt-5">
+
+        <div class="card-header">
+            <h3><i class="bi bi-newspaper"></i> Novo Artigo</h3>
+        </div>
+        
+        <div class="card-body pt-4">
+            <form method="POST" action="/articles/save">
+                <input class="form-control" type="text" name="title" placeholder="Título" required><br>
+                <input class="form-control" type="text" name="author" placeholder="Autor" required><br>
+                <textarea class="form-control" placeholder="Escreve o artigo aqui" name="body" id="article"></textarea><br>
+                <i class="bi bi-list"></i>
+                <label class="my-2 fs-5">Categoria</label>
+                <select name="category" class="form-select">
+                    <% categories.forEach((category) => { %>
+                        <option value="<%= category.id %>"><%= category.title %></option>
+                    <% }) %>
+                </select>
+                <br>
+                <button class="btn btn-success">Publicar</button>
+            </form>
+        </div>
+
+    </div>
+    
+</div>
+
+<script src="/tinymce/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        language:'pt_BR',
+        selector:"#article",
+        plugins:[
+            "advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime save media paste table emoticons imagetools code"
+        ],
+        tinycomments_mode: 'embedded',
+        tinycomments_author: 'Author name',
+    });
+
+</script>
+<%- include ('../../partials/footer.ejs') %>

@@ -1,0 +1,96 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm  fixed-top">
+    <a class="navbar-brand px-5 text-success fw-bold fs-2" href="/">
+    
+        <img class="navbar-brand" src="/assets/logo.png" alt="logo">
+    
+    </a>
+    <button class="navbar-toggler mx-3" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+     <div class="collapse navbar-collapse px-5" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+              <a class="nav-link fs-5" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link fs-5" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle fs-5" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Categories
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+             <% categories.forEach(category => { %>
+                <a class="dropdown-item" href="/category/<%= category.slug %>"><%= category.title %></a>
+             <%})%>
+            </div>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link fs-5" href="#">NewsLetter</a>
+          </li>
+          <li class="nav-item active">
+              <a class="nav-link fs-5" href="#">About us</a>
+          </li>
+          </ul>
+      </div>
+      <form class="row row-cols-lg-auto g-1 mx-5" name="search" id="search">
+          <div class="col-12">
+          <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
+          <div class="input-group">
+              <input class="form-control m-6"  class="t1" name="t1" type="search" placeholder="Pesquisar" aria-label="Search">
+          </div>
+          </div>
+      
+          <div class="col-12">
+              <button class="btn btn-outline-success m-6" type="submit" name="b1" value="Find"><i class="bi bi-search"></i></button>
+      
+      </form>
+    </div>
+  </nav>
+  <script>
+    
+    var TRange = null;
+
+    function findString(str) {
+        if (parseInt(navigator.appVersion) < 4) return;
+        var strFound;
+        if (window.find) {
+            // CODE FOR BROWSERS THAT SUPPORT window.find
+            strFound = self.find(str);
+            if (strFound && self.getSelection && !self.getSelection().anchorNode) {
+                strFound = self.find(str)
+            }
+            if (!strFound) {
+                strFound = self.find(str, 0, 1)
+                while (self.find(str, 0, 1)) continue
+            }
+        } else if (navigator.appName.indexOf("Microsoft") != -1) {
+            // EXPLORER-SPECIFIC CODE        
+            if (TRange != null) {
+                TRange.collapse(false)
+                strFound = TRange.findText(str)
+                if (strFound) TRange.select()
+            }
+            if (TRange == null || strFound == 0) {
+                TRange = self.document.body.createTextRange()
+                strFound = TRange.findText(str)
+                if (strFound) TRange.select()
+            }
+        } else if (navigator.appName == "Opera") {
+            alert("Opera browsers não suportado, desculpe...")
+            return;
+        }
+        if (!strFound) alert("'" + str + "' não encontrado!")
+            return;
+    };
+
+    document.getElementById('search').onsubmit = function() {
+        findString(this.t1.value);
+        return false;
+    };
+  </script>
+  <br/>
+  <br/>
+  <br/>
+ 
